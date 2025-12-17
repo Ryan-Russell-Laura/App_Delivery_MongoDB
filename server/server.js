@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 5000;
 // MODIFICACIÓN AQUÍ: Permitir origen dinámico
 const allowedOrigins = [
   'http://localhost:5173', // Para desarrollo local
-  process.env.FRONTEND_URL // Para producción (lo configuraremos en Render)
+  'https://appdeliverymongodb.netlify.app' // Para producción (lo configuraremos en Render)
 ];
 
 app.use(cors({
