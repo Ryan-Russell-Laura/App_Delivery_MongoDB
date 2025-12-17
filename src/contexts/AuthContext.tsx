@@ -40,14 +40,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
     setIsLoading(false);
   }, []);
-
+/*
   const login = async (username: string, password: string) => {
     const response = await fetch('http://localhost:5000/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
-
+*/
+  const login = async (username: string, password: string) => {
+    // CAMBIA la URL de 'http://localhost:5000/api/auth/login' a esto:
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    // ... resto de la función ...
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.message || 'Error al iniciar sesión');
@@ -59,14 +67,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('token', data.token);
     localStorage.setItem('user', JSON.stringify(data.user));
   };
-
+/*
   const register = async (username: string, password: string) => {
     const response = await fetch('http://localhost:5000/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
-
+*/
+  const register = async (username: string, password: string) => {
+    // CAMBIA la URL de 'http://localhost:5000/api/auth/register' a esto:
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.message || 'Error al registrarse');
