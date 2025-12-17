@@ -19,24 +19,20 @@ app.use(cors({
 }));
 */
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// MODIFICACIÓN AQUÍ: Permitir origen dinámico
+connectDB();
+
+// INICIO DEL CAMBIO CRÍTICO DE CORS
+// 1. Define los orígenes permitidos
 const allowedOrigins = [
-  'http://localhost:5173', // Para desarrollo local
-  'https://appdeliverymongodb.netlify.app' // Para producción (lo configuraremos en Render)
+    'http://localhost:5173', // Para desarrollo local
+    'https://appdeliverymongodb.netlify.app' // <<-- ¡PEGA AQUÍ TU URL DE NETLIFY!
 ];
 
+// 2. Aplica la configuración de CORS
 app.use(cors({
-  origin: function (origin, callback) {
-    // Permitir peticiones sin origen (como Postman) o si el origen está en la lista
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('No permitido por CORS'));
-    }
-  },
-  credentials: true
+    origin: allowedOrigins,
+    credentials: true, // Esto es CRUCIAL si manejas tokens de autorización
 }));
 
 app.use(express.json());
