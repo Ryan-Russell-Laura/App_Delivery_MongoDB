@@ -10,37 +10,29 @@ import pedidosRoutes from './routes/pedidos.js';
 
 dotenv.config();
 
-/*const app = express();
+const app = express();
+// 1. Definimos el puerto correctamente (vital para Render)
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}));
-*/
-const app = express();
-const PORT = process.env.PORT || 5000;
+// 2. Conectamos a la base de datos (UNA SOLA VEZ)
 connectDB();
 
-
-// INICIO DEL CAMBIO CRÍTICO DE CORS
-// 1. Define los orígenes permitidos
+// 3. Configuración de CORS
 const allowedOrigins = [
-    'http://localhost:5173', // Para desarrollo local
-    'https://appdeliverymongodb.netlify.app' // <<-- ¡PEGA AQUÍ TU URL DE NETLIFY!
+    'http://localhost:5173',
+    'https://appdeliverymongodb.netlify.app'
 ];
 
-// 2. Aplica la configuración de CORS
 app.use(cors({
     origin: allowedOrigins,
-    credentials: true, // Esto es CRUCIAL si manejas tokens de autorización
+    credentials: true,
 }));
 
+// 4. Middlewares de Express
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-connectDB();
-
+// 5. Rutas de la API
 app.use('/api/auth', authRoutes);
 app.use('/api/clientes', clientesRoutes);
 app.use('/api/motorizados', motorizadosRoutes);
@@ -50,6 +42,7 @@ app.get('/api', (req, res) => {
   res.json({ message: 'API del Sistema de Gestión de Pedidos y Delivery' });
 });
 
+// 6. Inicio del servidor
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
 });
