@@ -19,8 +19,9 @@ app.use(cors({
 }));
 */
 const app = express();
-
+const PORT = process.env.PORT || 5000;
 connectDB();
+
 
 // INICIO DEL CAMBIO CRÍTICO DE CORS
 // 1. Define los orígenes permitidos
